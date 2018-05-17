@@ -2,12 +2,12 @@ const express = require('express');
 const nunjucks = require('nunjucks');
 const body_parser = require('body-parser');
 const pgp = require('pg-promise')({});
-const db = pgp({database: 'blog', user: 'postgres'});
+const db = pgp({database: 'blog', user: 'postgres'});//if it is local. If it is not, I will have to put url here
 
 var app = express();
 
 nunjucks.configure('views', {
-  autoescape: true,
+  autoescape: true,  // Keep autoescape on all the time
   express: app,
   noCache: true
 });
@@ -34,7 +34,7 @@ app.get('/post/:slug', function (request, response, next) {
    .then(function (results) {
      response.send(results);
    })
-   .catch(next);
+   .catch(next);//remember to do this, to pass the error
 });
 
 app.get('/hello', function (request, response) {
@@ -54,7 +54,10 @@ app.get('/form', function(req, resp) {
 
 app.post('/submit', function (req, resp) {
   console.log(req.body);
-  
+  // if (req.body.fname){
+    
+  // }
+  // resp.send('OK');
   //resp.render('thanks.html');
   
   resp.redirect('/some-where-else');
